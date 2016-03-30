@@ -1,0 +1,10 @@
+ex4
+[num,dem]=ss2tf(A,b,c,0);
+sist=tf(num,dem);
+[num,dem]=ss2tf(A,L,ones(1,4),0)
+comp1=tf(num,dem);
+cs=tf(1,c);
+comp2=feedback(comp1,cs,-1)
+Ks=tf(1,K);
+comp3=series(comp2,Ks)
+[num,dem]=ss2tf(eye(4),b,K,0);
