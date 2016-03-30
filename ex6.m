@@ -1,9 +1,9 @@
 ex4
 [num,dem]=ss2tf(A,b,c,0);
 sist=tf(num,dem);
-[num,dem]=ss2tf(A-L*c-b*K,L,K,0);
+[num,dem]=ss2tf(A-L*c-b*K,-L,-K,0);
 comp=tf(num,dem);
-transf=feedback(sist,comp)
+transf=feedback(transf,1)
 bode(transf)
 p=pole(transf)
 z=zero(transf)
