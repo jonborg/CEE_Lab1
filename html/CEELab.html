@@ -1,0 +1,514 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>CEELab</title><meta name="generator" content="MATLAB 8.1"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2016-05-17"><meta name="DC.source" content="CEELab.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, tt, code { font-size:12px; }
+pre { margin:0px 0px 20px; }
+pre.error { color:red; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#1">Ex.1</a></li><li><a href="#2">Ex.2</a></li><li><a href="#3">Ex.3</a></li><li><a href="#4">Ex.4</a></li><li><a href="#5">Ex.5</a></li><li><a href="#6">Ex.6</a></li><li><a href="#7">Ex.7</a></li><li><a href="#8">Ex.7-Continua&ccedil;&atilde;o</a></li><li><a href="#9">Ex.8</a></li><li><a href="#10">Ex.9</a></li><li><a href="#11">Ex.10</a></li><li><a href="#12">Ex.11a</a></li><li><a href="#13">Ex.11b</a></li></ul></div><h2>Ex.1<a name="1"></a></h2><p>Matriz de Controlabilidade</p><pre class="codeinput">A=[0 0 1 0; 0 0 0 1; 0 566 -37 0; 0 -922 37 0];
+b=[0 0 65 -65]';
+c=[1 1 0 0];
+
+CM=[b A*b A*A*b A*A*A*b]
+
+<span class="keyword">if</span> rank(CM)&lt;4
+    display(<span class="string">'The system is NOT controlable'</span>);
+<span class="keyword">else</span>
+    display(<span class="string">'The system IS controlable'</span>);
+<span class="keyword">end</span>
+</pre><pre class="codeoutput">
+CM =
+
+           0          65       -2405       52195
+           0         -65        2405      -29055
+          65       -2405       52195     -569985
+         -65        2405      -29055     -286195
+
+The system IS controlable
+</pre><h2>Ex.2<a name="2"></a></h2><p>Matriz de Observalidade</p><pre class="codeinput">OM=[c;c*A;c*A*A;c*A*A*A]
+
+<span class="keyword">if</span> rank(OM)&lt;4
+    display(<span class="string">'The system is NOT observable'</span>);
+<span class="keyword">else</span>
+    display(<span class="string">'The system IS observable'</span>);
+<span class="keyword">end</span>
+</pre><pre class="codeoutput">
+OM =
+
+     1     1     0     0
+     0     0     1     1
+     0  -356     0     0
+     0     0     0  -356
+
+The system IS observable
+</pre><h2>Ex.3<a name="3"></a></h2><p>Diagrama de Bode para o sistema em cadeia aberta</p><pre class="codeinput">[num,den]=ss2tf(A,b,c,0);
+comp=tf(num,den)
+poles=pole(comp)
+bode(comp);
+</pre><pre class="codeoutput">
+comp =
+ 
+               2.314e04
+  -----------------------------------
+  s^4 + 37 s^3 + 922 s^2 + 1.317e04 s
+ 
+Continuous-time transfer function.
+
+
+poles =
+
+   0.0000 + 0.0000i
+  -7.4016 +23.2085i
+  -7.4016 -23.2085i
+ -22.1969 + 0.0000i
+
+</pre><img vspace="5" hspace="5" src="CEELab_01.png" alt=""> <h2>Ex.4<a name="4"></a></h2><p>Projec&ccedil;&atilde;o dos ganhos K e L</p><pre class="codeinput">alphaK=poly([-70 -20 -10 -10]);
+alphaL=poly([-50 -50 -30 -30]);
+a=poly(A);
+
+M=[1 0 0 0; a(2) 1 0 0; a(3) a(2) 1 0; a(4) a(3) a(2) 1];
+
+K=(alphaK(2:5)-a(2:5))*inv(M)'*inv(CM)
+L=inv(OM)*inv(M)*(alphaL(2:5)-a(2:5))'
+</pre><pre class="codeoutput">
+K =
+
+    6.0501  -30.5345    1.0297   -0.0933
+
+
+L =
+
+   1.0e+03 *
+
+    0.0335
+    0.0895
+   -1.1612
+    5.0882
+
+</pre><h2>Ex.5<a name="5"></a></h2><p>Simula&ccedil;&atilde;o do sistema com compensador</p><pre class="codeinput">open_system(<span class="string">'p5'</span>);
+sim(<span class="string">'p5'</span>);
+figure
+plot(ref);
+hold <span class="string">on</span>
+plot(y,<span class="string">'r'</span>);
+hold <span class="string">off</span>
+xlabel(<span class="string">'Time(s)'</span>);
+ylabel(<span class="string">'y'</span>);
+</pre><img vspace="5" hspace="5" src="CEELab_02.png" alt=""> <h2>Ex.6<a name="6"></a></h2><p>Diagrama de Bode para o sistema em cadeia fechada</p><pre class="codeinput">[num,dem]=ss2tf(A,b,c,0);
+sist=tf(num,dem);
+[num,dem]=ss2tf(A-L*c-b*K,-L,-K,0);
+comp=tf(num,dem);
+transf=series(comp,sist);
+transf=feedback(transf,1)
+bode(transf)
+p=pole(transf)
+z=zero(transf)
+</pre><pre class="codeoutput">
+transf =
+ 
+                                                               
+            -9.724e07 s^3 - 4.853e09 s^2 - 4.559e10 s + 3.15e11
+                                                               
+  ------------------------------------------------------------------------
+                                                                          
+  s^8 + 270 s^7 + 3.03e04 s^6 + 1.839e06 s^5 + 6.573e07 s^4 + 1.41e09 s^3 
+                                                                          
+                                     + 1.762e10 s^2 + 1.169e11 s + 3.15e11
+                                                                          
+ 
+Continuous-time transfer function.
+
+
+p =
+
+  -70.0000
+  -50.0000
+  -50.0000
+  -30.0000
+  -30.0000
+  -20.0000
+  -10.0000
+  -10.0000
+
+
+z =
+
+  -32.2676
+  -22.1688
+    4.5284
+
+</pre><img vspace="5" hspace="5" src="CEELab_03.png" alt=""> <h2>Ex.7<a name="7"></a></h2><p>Ensaio com o sistema real</p><pre class="codeinput">load(<span class="string">'matlab_ex7_com2filtros.mat'</span>);
+plot(rf(:,1),rf(:,2),p(:,1),p(:,2)+g(:,2),<span class="string">'r'</span>)
+xlabel(<span class="string">'Time(s)'</span>);
+ylabel(<span class="string">'y'</span>);
+</pre><img vspace="5" hspace="5" src="CEELab_04.png" alt=""> <h2>Ex.7-Continua&ccedil;&atilde;o<a name="8"></a></h2><p>Ensaio com integrador</p><pre class="codeinput">A=[0 0 1 0; 0 0 0 1; 0 566 -37 0; 0 -922 37 0];
+b=[0 0 65 -65]';
+c=[1 1 0 0];
+
+A2=[A b;0 0 0 0 0];
+b2=[zeros(4,1); 1];
+c2=[c 0];
+
+alphaK=poly([-70 -20 -10 -10 -50])
+alphaL=poly([-50 -50 -30 -30 -30])
+a=poly(A2)
+
+CM2=[b2 A2*b2 A2*A2*b2 A2*A2*A2*b2 A2*A2*A2*A2*b2]
+OM2=[c2;c2*A2;c2*A2*A2;c2*A2*A2*A2;c2*A2*A2*A2*A2]
+M2=[1 0 0 0 0;
+    a(2) 1 0 0 0;
+    a(3) a(2) 1 0 0;
+    a(4) a(3) a(2) 1 0;
+    a(5) a(4) a(3) a(2) 1];
+K=(alphaK(2:6)-a(2:6))*inv(M2)'*inv(CM2)
+L=inv(OM2)*inv(M2)*(alphaL(2:6)-a(2:6))'
+
+load(<span class="string">'matlab_exint.mat'</span>);
+plot(rf(:,1),rf(:,2),p(:,1),p(:,2)+g(:,2),<span class="string">'r'</span>)
+xlabel(<span class="string">'Time(s)'</span>);
+ylabel(<span class="string">'y'</span>);
+</pre><pre class="codeoutput">
+alphaK =
+
+           1         160        8800      202000     1990000     7000000
+
+
+alphaL =
+
+           1         190       14200      522000     9450000    67500000
+
+
+a =
+
+   1.0e+04 *
+
+    0.0001    0.0037    0.0922    1.3172         0         0
+
+
+CM2 =
+
+           0           0          65       -2405       52195
+           0           0         -65        2405      -29055
+           0          65       -2405       52195     -569985
+           0         -65        2405      -29055     -286195
+           1           0           0           0           0
+
+
+OM2 =
+
+           1           1           0           0           0
+           0           0           1           1           0
+           0        -356           0           0           0
+           0           0           0        -356           0
+           0      328232      -13172           0       23140
+
+
+K =
+
+  302.5065 -857.8320   15.9829  -35.2017  123.0000
+
+
+L =
+
+   1.0e+03 *
+
+    0.3944
+   -0.2414
+   -0.1575
+    7.7745
+    2.9170
+
+</pre><img vspace="5" hspace="5" src="CEELab_05.png" alt=""> <h2>Ex.8<a name="9"></a></h2><p>Ensaio sem pr&eacute;-filtro</p><pre class="codeinput">load(<span class="string">'matlab_ex8_semfiltro.mat'</span>)
+plot(rf(:,1),rf(:,2),p(:,1),p(:,2)+g(:,2),<span class="string">'r'</span>)
+xlabel(<span class="string">'Time(s)'</span>);
+ylabel(<span class="string">'y'</span>);
+</pre><img vspace="5" hspace="5" src="CEELab_06.png" alt=""> <h2>Ex.9<a name="10"></a></h2><p>Efeito da frequ&ecirc;ncia de corte do pr&eacute;-filtro</p><pre class="codeinput">load(<span class="string">'matlab_ex9_wn1_2566.mat'</span>)
+plot(rf(:,1),rf(:,2),p(:,1),p(:,2)+g(:,2),<span class="string">'r'</span>)
+xlabel(<span class="string">'Time(s)'</span>);
+ylabel(<span class="string">'y'</span>);
+</pre><img vspace="5" hspace="5" src="CEELab_07.png" alt=""> <h2>Ex.10<a name="11"></a></h2><p>Ensaio sem sinal do extens&oacute;metro</p><pre class="codeinput">load(<span class="string">'matlab_ex7_com2filtros.mat'</span>)
+original=[p(:,1) p(:,2)+g(:,2)];
+load(<span class="string">'matlab_ex10_comfiltro.mat'</span>);
+plot(rf(:,1),rf(:,2),p(:,1),p(:,2),<span class="string">'r'</span>,original(:,1),original(:,2))
+xlabel(<span class="string">'Time(s)'</span>);
+ylabel(<span class="string">'y'</span>);
+</pre><img vspace="5" hspace="5" src="CEELab_08.png" alt=""> <h2>Ex.11a<a name="12"></a></h2><p>Proje&ccedil;&atilde;o de outros ganhos - 1&ordf; Sugest&atilde;o</p><pre class="codeinput">alphaK=poly([-70 -20 -10 -10]);
+alphaL=poly([-75 -75 -45 -45]);
+a=poly(A);
+M=[1 0 0 0; a(2) 1 0 0; a(3) a(2) 1 0; a(4) a(3) a(2) 1];
+
+K=(alphaK(2:5)-a(2:5))*inv(M)'*inv(CM)
+L=inv(OM)*inv(M)*(alphaL(2:5)-a(2:5))'
+
+load(<span class="string">'matlab_ex11a.mat'</span>)
+plot(rf(:,1),rf(:,2),p(:,1),p(:,2)+g(:,2),<span class="string">'r'</span>)
+xlabel(<span class="string">'Time(s)'</span>);
+ylabel(<span class="string">'y'</span>);
+</pre><pre class="codeoutput">
+K =
+
+    6.1330  -30.4307    1.0316   -0.0912
+
+
+L =
+
+   1.0e+04 *
+
+    0.0594
+   -0.0391
+   -1.0171
+    2.2884
+
+</pre><img vspace="5" hspace="5" src="CEELab_09.png" alt=""> <h2>Ex.11b<a name="13"></a></h2><p>Proje&ccedil;&atilde;o de outros ganhos - 2&ordf; Sugest&atilde;o</p><pre class="codeinput">alphaK=poly([-70 -20 -1+5*1i -1-5*1i]);
+alphaL=poly([-50 -50 -30 -30]);
+a=poly(A);
+M=[1 0 0 0; a(2) 1 0 0; a(3) a(2) 1 0; a(4) a(3) a(2) 1];
+
+K=(alphaK(2:5)-a(2:5))*inv(M)'*inv(CM)
+L=inv(OM)*inv(M)*(alphaL(2:5)-a(2:5))'
+
+load(<span class="string">'matlab_ex11b.mat'</span>)
+plot(rf(:,1),rf(:,2),p(:,1),p(:,2)+g(:,2),<span class="string">'r'</span>)
+xlabel(<span class="string">'Time(s)'</span>);
+ylabel(<span class="string">'y'</span>);
+</pre><pre class="codeoutput">
+K =
+
+    1.6101   -8.8981   -0.3445   -1.1903
+
+
+L =
+
+   1.0e+03 *
+
+    0.0336
+    0.0894
+   -1.1514
+    5.0768
+
+</pre><img vspace="5" hspace="5" src="CEELab_10.png" alt=""> <p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2013a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Ex.1
+% Matriz de Controlabilidade
+A=[0 0 1 0; 0 0 0 1; 0 566 -37 0; 0 -922 37 0];
+b=[0 0 65 -65]';
+c=[1 1 0 0];
+
+CM=[b A*b A*A*b A*A*A*b]
+    
+if rank(CM)<4
+    display('The system is NOT controlable');
+else
+    display('The system IS controlable');
+end
+
+%% Ex.2
+% Matriz de Observalidade
+
+OM=[c;c*A;c*A*A;c*A*A*A]
+  
+if rank(OM)<4
+    display('The system is NOT observable');
+else
+    display('The system IS observable');
+end
+%% Ex.3
+% Diagrama de Bode para o sistema em cadeia aberta
+    
+[num,den]=ss2tf(A,b,c,0);
+comp=tf(num,den)
+poles=pole(comp)
+bode(comp);
+
+%% Ex.4
+% Projecção dos ganhos K e L
+
+alphaK=poly([-70 -20 -10 -10]);
+alphaL=poly([-50 -50 -30 -30]);
+a=poly(A);
+
+M=[1 0 0 0; a(2) 1 0 0; a(3) a(2) 1 0; a(4) a(3) a(2) 1];
+
+K=(alphaK(2:5)-a(2:5))*inv(M)'*inv(CM)
+L=inv(OM)*inv(M)*(alphaL(2:5)-a(2:5))'
+
+%% Ex.5
+% Simulação do sistema com compensador
+
+open_system('p5');
+sim('p5');
+figure
+plot(ref);
+hold on
+plot(y,'r');
+hold off
+xlabel('Time(s)');
+ylabel('y');
+%% Ex.6
+% Diagrama de Bode para o sistema em cadeia fechada
+
+[num,dem]=ss2tf(A,b,c,0);
+sist=tf(num,dem);
+[num,dem]=ss2tf(A-L*c-b*K,-L,-K,0);
+comp=tf(num,dem);
+transf=series(comp,sist);
+transf=feedback(transf,1)
+bode(transf)
+p=pole(transf)
+z=zero(transf)
+
+%% Ex.7
+% Ensaio com o sistema real
+
+load('matlab_ex7_com2filtros.mat');
+plot(rf(:,1),rf(:,2),p(:,1),p(:,2)+g(:,2),'r')
+xlabel('Time(s)');
+ylabel('y');
+%% Ex.7-Continuação
+% Ensaio com integrador
+
+A=[0 0 1 0; 0 0 0 1; 0 566 -37 0; 0 -922 37 0];
+b=[0 0 65 -65]';
+c=[1 1 0 0];
+
+A2=[A b;0 0 0 0 0];
+b2=[zeros(4,1); 1];
+c2=[c 0];
+
+alphaK=poly([-70 -20 -10 -10 -50])
+alphaL=poly([-50 -50 -30 -30 -30])
+a=poly(A2)
+
+CM2=[b2 A2*b2 A2*A2*b2 A2*A2*A2*b2 A2*A2*A2*A2*b2]
+OM2=[c2;c2*A2;c2*A2*A2;c2*A2*A2*A2;c2*A2*A2*A2*A2]
+M2=[1 0 0 0 0; 
+    a(2) 1 0 0 0; 
+    a(3) a(2) 1 0 0; 
+    a(4) a(3) a(2) 1 0; 
+    a(5) a(4) a(3) a(2) 1];
+K=(alphaK(2:6)-a(2:6))*inv(M2)'*inv(CM2)
+L=inv(OM2)*inv(M2)*(alphaL(2:6)-a(2:6))'
+
+load('matlab_exint.mat');
+plot(rf(:,1),rf(:,2),p(:,1),p(:,2)+g(:,2),'r')
+xlabel('Time(s)');
+ylabel('y');
+
+%% Ex.8
+% Ensaio sem pré-filtro
+
+load('matlab_ex8_semfiltro.mat')
+plot(rf(:,1),rf(:,2),p(:,1),p(:,2)+g(:,2),'r')
+xlabel('Time(s)');
+ylabel('y');
+%% Ex.9
+% Efeito da frequência de corte do pré-filtro
+
+load('matlab_ex9_wn1_2566.mat')
+plot(rf(:,1),rf(:,2),p(:,1),p(:,2)+g(:,2),'r')
+xlabel('Time(s)');
+ylabel('y');
+
+%% Ex.10
+% Ensaio sem sinal do extensómetro
+
+load('matlab_ex7_com2filtros.mat')
+original=[p(:,1) p(:,2)+g(:,2)];
+load('matlab_ex10_comfiltro.mat');
+plot(rf(:,1),rf(:,2),p(:,1),p(:,2),'r',original(:,1),original(:,2))
+xlabel('Time(s)');
+ylabel('y');
+
+%% Ex.11a
+% Projeção de outros ganhos - 1ª Sugestão
+alphaK=poly([-70 -20 -10 -10]);
+alphaL=poly([-75 -75 -45 -45]);
+a=poly(A);
+M=[1 0 0 0; a(2) 1 0 0; a(3) a(2) 1 0; a(4) a(3) a(2) 1];
+
+K=(alphaK(2:5)-a(2:5))*inv(M)'*inv(CM)
+L=inv(OM)*inv(M)*(alphaL(2:5)-a(2:5))'
+
+load('matlab_ex11a.mat')
+plot(rf(:,1),rf(:,2),p(:,1),p(:,2)+g(:,2),'r')
+xlabel('Time(s)');
+ylabel('y');
+
+%% Ex.11b
+% Projeção de outros ganhos - 2ª Sugestão
+
+alphaK=poly([-70 -20 -1+5*1i -1-5*1i]);
+alphaL=poly([-50 -50 -30 -30]);
+a=poly(A);
+M=[1 0 0 0; a(2) 1 0 0; a(3) a(2) 1 0; a(4) a(3) a(2) 1];
+
+K=(alphaK(2:5)-a(2:5))*inv(M)'*inv(CM)
+L=inv(OM)*inv(M)*(alphaL(2:5)-a(2:5))'
+
+load('matlab_ex11b.mat')
+plot(rf(:,1),rf(:,2),p(:,1),p(:,2)+g(:,2),'r')
+xlabel('Time(s)');
+ylabel('y');
+
+##### SOURCE END #####
+--></body></html>
